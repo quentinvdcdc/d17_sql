@@ -1,0 +1,32 @@
+1.SELECT * FROM albums;
+2.SELECT * FROM albums WHERE Title LIKE '%Great%';
+3.SELECT COUNT(AlbumID) FROM albums;
+4.DELETE FROM albums WHERE Title LIKE '%music%';
+5.SELECT * FROM albums
+JOIN artists ON artists.ArtistId = albums.ArtistId
+WHERE artists.name = 'AC/DC';
+6.SELECT TrackID, tracks.Name, tracks.AlbumID, albums.Title, tracks.Composer FROM tracks
+JOIN albums ON albums.AlbumId = tracks.AlbumId
+JOIN artists ON artists.ArtistId = albums.ArtistId
+WHERE artists.name = 'AC/DC';
+7.SELECT TrackID, tracks.Name, tracks.AlbumID, albums.Title, tracks.Composer FROM tracks
+JOIN albums ON albums.AlbumId = tracks.AlbumId
+JOIN artists ON artists.ArtistId = albums.ArtistId
+WHERE artists.name = 'AC/DC'AND albums.Title = 'Let There Be Rock';
+8.SELECT SUM(UnitPrice), SUM(Milliseconds) FROM tracks
+JOIN albums ON albums.AlbumId = tracks.AlbumId
+JOIN artists ON artists.ArtistId = albums.ArtistId
+WHERE artists.name = 'AC/DC'AND albums.Title = 'Let There Be Rock';
+9.SELECT SUM(UnitPrice) FROM tracks
+JOIN albums ON albums.AlbumId = tracks.AlbumId
+JOIN artists ON artists.ArtistId = albums.ArtistId
+WHERE artists.name = 'Deep Purple';
+10.INSERT INTO artists (Name) VALUES ('DJ Ross');
+INSERT INTO albums (Title,ArtistId) VALUES ('Dreamland Live', (SELECT ArtistID FROM artists WHERE Name = 'DJ Ross'));
+INSERT INTO tracks (Name, AlbumID, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice) VALUES ('Emotion',(SELECT AlbumID FROM albums WHERE Title = 'Dreamland Live'),1,1, 'DJ Ross', 264568, 8623572, 0.99), ('Dreamland',(SELECT AlbumID FROM albums WHERE Title = 'Dreamland Live'),1,1, 'DJ Ross', 264568, 8623572, 0.99));
+
+
+
+
+
+PRAGMA table_info(tracks);

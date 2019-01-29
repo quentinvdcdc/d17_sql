@@ -1,0 +1,148 @@
+#https://www.sqlite.org/foreignkeys.html
+#https://stackoverflow.com/questions/48288779/creating-a-join-table-sqlite3?rq=1
+
+CREATE TABLE users(
+UserId INTEGER PRIMARY KEY AUTOINCREMENT, 
+Name TEXT
+);
+
+CREATE TABLE articles(
+ArticleId INTEGER PRIMARY KEY AUTOINCREMENT, 
+ContentArticle TEXT,
+UserId INTEGER,
+FOREIGN KEY(UserId) REFERENCES users(UserId)
+);
+
+CREATE TABLE categories(
+CategoryId INTEGER PRIMARY KEY AUTOINCREMENT, 
+Title TEXT
+);
+
+CREATE TABLE tags(
+TagId INTEGER PRIMARY KEY AUTOINCREMENT, 
+Title TEXT,
+Color TEXT
+);
+
+CREATE TABLE articles_categories(
+Id INTEGER PRIMARY KEY AUTOINCREMENT,
+ArticleId INTEGER,
+CategoryId INTEGER,
+FOREIGN KEY (ArticleId) REFERENCES articles(ArticleId),
+FOREIGN KEY (CategoryId) REFERENCES categories(CategoryId)
+);
+
+CREATE TABLE categories_tags(
+Id INTEGER PRIMARY KEY AUTOINCREMENT,
+CategoryId INTEGER,
+TagId INTEGER,
+FOREIGN KEY (CategoryId) REFERENCES categories(CategoryId),
+FOREIGN KEY (TagId) REFERENCES tags(TagId)
+);
+
+==============
+
+CREATE TABLE students(
+students_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+name TEXT
+);
+
+CREATE TABLE courses(
+courses_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+title TEXT,
+description TEXT
+);
+
+CREATE TABLE lessons(
+lessons_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+body TEXT,
+courses_id TEXT,
+FOREIGN KEY(courses_id) REFERENCES courses(courses_id)
+);
+
+CREATE TABLE students_courses(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+students_id INTEGER,
+courses_id INTEGER,
+FOREIGN KEY (students_id) REFERENCES students(students_id),
+FOREIGN KEY (courses_id) REFERENCES courses(courses_id)
+);
+
+
+======
+
+CREATE TABLE users(
+users_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+name TEXT
+);
+
+CREATE TABLE images(
+images_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+content TEXT
+);
+
+CREATE TABLE pins(
+pins_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+url TEXT,
+users_id INTEGER,
+images_id INTEGER,
+FOREIGN KEY(users_id) REFERENCES users(users_id),
+FOREIGN KEY(images_id) REFERENCES images(images_id)
+);
+
+CREATE TABLE comments(
+comments_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+body TEXT,
+users_id INTEGER,
+pins_id INTEGER,
+FOREIGN KEY(users_id) REFERENCES users(users_id),
+FOREIGN KEY(pins_id) REFERENCES pins(pins_id)
+);
+
+=========
+
+CREATE TABLE users(
+users_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+name TEXT
+);
+
+CREATE TABLE links(
+links_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+url TEXT,
+users_id INTEGER,
+FOREIGN KEY(users_id) REFERENCES users(users_id)
+);
+
+CREATE TABLE primary_comments(
+primary_comments_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+body TEXT,
+users_id INTEGER,
+links_id INTEGER,
+FOREIGN KEY(users_id) REFERENCES users(users_id),
+FOREIGN KEY(links_id) REFERENCES links(links_id)
+);
+
+CREATE TABLE secondary_comments(
+secondary_comment_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+body TEXT,
+users_id INTEGER,
+primary_comments_id INTEGER,
+FOREIGN KEY(users_id) REFERENCES users(users_id),
+FOREIGN KEY(primary_comments_id) REFERENCES primary_comments(primary_comments_id)
+);
+
+=========
+
+CREATE TABLE courses(
+courses_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+title TEXT,
+description TEXT
+);
+
+CREATE TABLE students(
+students_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+name TEXT,
+courses_id INTEGER,
+primary_comments_id INTEGER,
+FOREIGN KEY(courses_id) REFERENCES courses(courses_id)
+);
